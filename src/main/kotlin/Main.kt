@@ -7,6 +7,10 @@ val commissionPercentAction = 0.60F // процент комисии с сумм
 val commissionMin = 35F // минимальная сумма комиссии
 val commissionFix = 20F // фиксированный размер комиссии
 val commissionFreeLimit: Int = 75_000 // лимит движений по карте, не облагаемый комиссией
+val cVKPayDayLimit: Int = 15_000
+val cVKPayMonthLimit: Int = 40_000
+val cDayLimit: Int = 150_000
+val cMonthLimit: Int = 600_000
 val cVKPay = "VK Pay"
 val cardTypes = arrayOf("VK Pay", "Mastercard", "Maestro", "Visa", "Мир")
 val cardTypesWithCommission = arrayOf("Visa", "Мир")
@@ -60,23 +64,23 @@ fun calcCommissionBase(
 fun checkLimit(cardType: String, previousAmount: Int, amount: Int): Boolean {
     val fullAmount = amount + previousAmount
     when {
-        cVKPay.equals(cardType) && amount > 15_000 -> {
-            println(String.format(iDayLimit, 15_000, amount))
+        cVKPay.equals(cardType) && amount > cVKPayDayLimit -> {
+            println(String.format(iDayLimit, cVKPayDayLimit, amount))
             return false
         }
 
-        cVKPay.equals(cardType) && fullAmount > 40_000 -> {
-            println(String.format(iMonthLimit, 40_000, fullAmount))
+        cVKPay.equals(cardType) && fullAmount > cVKPayMonthLimit -> {
+            println(String.format(iMonthLimit, cVKPayMonthLimit, fullAmount))
             return false
         }
 
-        !cVKPay.equals(cardType) && amount > 150_000 -> {
-            println(String.format(iDayLimit, 150_000, amount))
+        !cVKPay.equals(cardType) && amount > cDayLimit -> {
+            println(String.format(iDayLimit, cDayLimit, amount))
             return false
         }
 
-        !cVKPay.equals(cardType) && fullAmount > 600_000 -> {
-            println(String.format(iMonthLimit, 600_000, fullAmount))
+        !cVKPay.equals(cardType) && fullAmount > cMonthLimit -> {
+            println(String.format(iMonthLimit, cMonthLimit, fullAmount))
             return false
         }
     }
@@ -90,7 +94,7 @@ fun checkLimit(cardType: String, previousAmount: Int, amount: Int): Boolean {
  * previousAmount - сумму предыдущих переводов в этом месяце (по умолчанию 0 рублей);
  * amount - сумма совершаемого перевода;
  */
-fun calcCommission(cardType: String = cVKPay, previousAmount: Int = 0, amount: Int): Double {
+fun calcCommission(cardType: String = cVKPay, previousAmount: Int = 0, amount: Int): Float {
     if (checkLimit(cardType, previousAmount, amount)) {
 
         val fullAmount = previousAmount + amount;
@@ -110,7 +114,7 @@ fun calcCommission(cardType: String = cVKPay, previousAmount: Int = 0, amount: I
             ) // при привышении лимита - комиссией облагается только сумма превышения
             else -> calcCommissionBase(amount, commissionPercentAction, commissionPlus = commissionFix)
         }
-        return (commission * 100.0).roundToInt() / 100.0
+        return (commission * 100.0F).roundToInt() / 100.0F
     }
-    return (-1).toDouble()
+    return (-1).toFloat()
 }
