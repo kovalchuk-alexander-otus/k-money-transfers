@@ -55,7 +55,7 @@ class MainKtTest {
 
         val result: Boolean = checkLimit(cardType, previousAmount, amount)
 
-        assertEquals(false, result)
+        assertFalse(result)
     }
     @Test
     fun checkLimit_VKPayByDayComplete() {
@@ -65,7 +65,7 @@ class MainKtTest {
 
         val result: Boolean = checkLimit(cardType, previousAmount, amount)
 
-        assertEquals(true, result)
+        assertTrue(result)
     }
 
 
@@ -77,7 +77,7 @@ class MainKtTest {
 
         val result: Boolean = checkLimit(cardType, previousAmount, amount)
 
-        assertEquals(false, result)
+        assertFalse(result)
     }
     @Test
     fun checkLimit_ByDayComplete() {
@@ -87,7 +87,7 @@ class MainKtTest {
 
         val result: Boolean = checkLimit(cardType, previousAmount, amount)
 
-        assertEquals(true, result)
+        assertTrue(result)
     }
 
     @Test
@@ -98,7 +98,7 @@ class MainKtTest {
 
         val result: Boolean = checkLimit(cardType, previousAmount, amount)
 
-        assertEquals(false, result)
+        assertFalse(result)
     }
     @Test
     fun checkLimit_VKPayByMonthComplete() {
@@ -108,7 +108,7 @@ class MainKtTest {
 
         val result: Boolean = checkLimit(cardType, previousAmount, amount)
 
-        assertEquals(true, result)
+        assertTrue(result)
     }
 
 
@@ -120,7 +120,7 @@ class MainKtTest {
 
         val result: Boolean = checkLimit(cardType, previousAmount, amount)
 
-        assertEquals(false, result)
+        assertFalse(result)
     }
     @Test
     fun checkLimit_ByMonthComplete() {
@@ -130,7 +130,7 @@ class MainKtTest {
 
         val result: Boolean = checkLimit(cardType, previousAmount, amount)
 
-        assertEquals(true, result)
+        assertTrue(result)
     }
 
     @Test
