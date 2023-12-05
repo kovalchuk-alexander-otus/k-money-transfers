@@ -26,22 +26,22 @@ fun main() {
         var a = Random.nextInt(1, 50_000);
         println("За перевод суммы ${a} будет взята комиссия ${calcCommission(amount = a)}")
     }
-
-    // random card & others
-    for (i in 1..100) {
-        val card = cardTypes[Random.nextInt(0, cardTypes.size)]
-        val amount = Random.nextInt(1, 200_000)
-        val previous = Random.nextInt(0, 1000_000)
-        println(
-            "За перевод суммы ${amount} по карте ${card} (с учетом ранее совершенных переводов на сумму ${previous}) будет взята комиссия ${
-                calcCommission(
-                    card,
-                    previous,
-                    amount
-                )
-            }"
-        )
-    }
+    /*
+        // random card & others
+        for (i in 1..100) {
+            val card = cardTypes[Random.nextInt(0, cardTypes.size)]
+            val amount = Random.nextInt(1, 200_000)
+            val previous = Random.nextInt(0, 1000_000)
+            println(
+                "За перевод суммы ${amount} по карте ${card} (с учетом ранее совершенных переводов на сумму ${previous}) будет взята комиссия ${
+                    calcCommission(
+                        card,
+                        previous,
+                        amount
+                    )
+                }"
+            )
+        }*/
 }
 
 
@@ -112,7 +112,12 @@ fun calcCommission(cardType: String = cVKPay, previousAmount: Int = 0, amount: I
                 commissionPercentAction,
                 commissionPlus = commissionFix
             ) // при привышении лимита - комиссией облагается только сумма превышения
-            else -> calcCommissionBase(amount, commissionPercentAction, commissionPlus = commissionFix)
+            else -> calcCommissionBase(
+                amount,
+                commissionPercent,
+                commissionMin,
+                commissionFix
+            ) // TODO: сия строка не соответствует требованиям и сюда попадем ежели появляются неведомые до ныне типы карт
         }
         return (commission * 100.0F).roundToInt() / 100.0F
     }
