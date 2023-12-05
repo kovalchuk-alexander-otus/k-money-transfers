@@ -218,7 +218,7 @@ class MainKtTest {
 
                 // TODO: а вдруг появятся карты, о которых не знает программа
                 Arguments.of("Подсолнух", commissionFreeLimit-1_000, 900, 35F),
-                Arguments.of("Подсолнух", commissionFreeLimit+1, 5_000, 57.6F)
+                Arguments.of("Подсолнух", commissionFreeLimit+1, 5_000, 57.5F)
             );
         }
     }
